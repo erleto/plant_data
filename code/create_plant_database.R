@@ -29,6 +29,22 @@ list_1995_year <- lapply(mget(list_1995), transform, YEAR = 1995)
 list2env(list_1985_year, envir = .GlobalEnv)
 list2env(list_1995_year, envir = .GlobalEnv)
 
+ls(pattern = '^vmi')
+
+# Bind 1985 and 1995 data frames
+vmi_lichen <- dplyr::bind_rows(vmi85_jakalat, vmi95_jakalat9)
+
+vmi95_koeala9 <- dplyr::rename(vmi95_koeala9, SIIRT_POHJ = PE_SIIRT, 
+  SIIRT_ITA = IL_SIIRT, RYHMANJOHTAJA = RJ, EP = E_P)
+vmi_sample_plot <- dplyr::bind_rows(vmi85_koeala, vmi95_koeala9)
+vmi_sample_plot$PVM <- as.Date(vmi_sample_plot$PVM)
+
+vmi_species <- vmi85_lajit
+
+vmi95_lukupuu9 <- ***
+vmi_sample_trees <- dplyr::bind_rows(vmi85_lukupuu, vmi95_lukupuu9)
+
+
 luke_plant_db <- dbConnect(RSQLite::SQLite(), "")
 RSQLite::dbWriteTable(luke_plant_db, "vmi85_lajit", vmi85_lajit)
 RSQLite::dbWriteTable(luke_plant_db, "vmi85_lukupuu", vmi85_lukupuu)
