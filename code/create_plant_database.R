@@ -25,10 +25,11 @@ list_1995 <- ls(pattern = "^vmi95")
 list_1985_year <- lapply(mget(list_1985), transform, YEAR = 1985)
 list_1985_year <- lapply(list_1985_year, function(x) { x["VMITUNNUS"] <- NULL; x })
 list_1995_year <- lapply(mget(list_1995), transform, YEAR = 1995)
-
+# Convert the lists of data frames to actual data frames
 list2env(list_1985_year, envir = .GlobalEnv)
 list2env(list_1995_year, envir = .GlobalEnv)
 
+# Print all objects beginning with 'vmi'
 ls(pattern = '^vmi')
 
 # Bind 1985 and 1995 data frames
@@ -41,9 +42,17 @@ vmi_sample_plot$PVM <- as.Date(vmi_sample_plot$PVM)
 
 vmi_species <- vmi85_lajit
 
-vmi95_lukupuu9 <- ***
+vmi85_lukupuu$SYNTYTAPA <- as.character(vmi85_lukupuu$SYNTYTAPA)
+vmi85_lukupuu$RINN_KORK_IKA <- as.character(vmi85_lukupuu$RINN_KORK_IKA)
+vmi85_lukupuu$IKALISAYS <- as.character(vmi85_lukupuu$IKALISAYS)
+vmi85_lukupuu$LENKOUS <- as.character(vmi85_lukupuu$LENKOUS)
+vmi85_lukupuu$TUHON_ASTE <- as.character(vmi85_lukupuu$TUHON_ASTE)
 vmi_sample_trees <- dplyr::bind_rows(vmi85_lukupuu, vmi95_lukupuu9)
 
+vmi_osakasvusto <- dplyr::bind_rows(vmi85_osakasv, vmi95_osakasv9)
+
+vmi95_peite9 <- dplyr::rename(vmi95_peite9, PEITTAVYYS = PEITE)
+vmi_plant_coverage <- dplyr::bind_rows(vmi85_peite, vmi95_peite9)
 
 luke_plant_db <- dbConnect(RSQLite::SQLite(), "")
 RSQLite::dbWriteTable(luke_plant_db, "vmi85_lajit", vmi85_lajit)
