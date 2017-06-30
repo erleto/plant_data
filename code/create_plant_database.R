@@ -52,8 +52,24 @@ vmi_sample_trees <- dplyr::bind_rows(vmi85_lukupuu, vmi95_lukupuu9)
 vmi_osakasvusto <- dplyr::bind_rows(vmi85_osakasv, vmi95_osakasv9)
 
 vmi95_peite9 <- dplyr::rename(vmi95_peite9, PEITTAVYYS = PEITE)
-vmi_plant_coverage <- dplyr::bind_rows(vmi85_peite, vmi95_peite9)
+vmi_species_coverage <- dplyr::bind_rows(vmi85_peite, vmi95_peite9)
 
+vmi_bushes <- dplyr::bind_rows(vmi85_pensaat, vmi95_pensaat9)
+
+vmi85_pienpuut <- dplyr::rename(vmi85_pienpuut, KESKIPITUUS = KESKIPITUUSLUOKKA, 
+  RUNKOLUKU = LKM)
+vmi85_pienpuut$KESKIPITUUS <- as.character(vmi85_pienpuut$KESKIPITUUS)
+vmi_small_trees <- dplyr::bind_rows(vmi85_pienpuut, vmi95_pienpuu9)
+
+vmi_mean_basal_area <- dplyr::bind_rows(vmi85_ppaka, vmi95_ppaka9)
+
+vmi_mean_basal_area_plot <- dplyr::bind_rows(vmi85_ppakuvio, vmi95_ppakuv9)
+
+vmi_trees <- dplyr::bind_rows(vmi85_puut, vmi95_puut9)
+
+vmi95_ruutu9 <- dplyr::rename(vmi95_ruutu9, RUNGOT = RUNGOT_1)
+vmi_quadrats <- dplyr::bind_rows(vmi85_ruutu, vmi95_ruutu9)
+  
 luke_plant_db <- dbConnect(RSQLite::SQLite(), "")
 RSQLite::dbWriteTable(luke_plant_db, "vmi85_lajit", vmi85_lajit)
 RSQLite::dbWriteTable(luke_plant_db, "vmi85_lukupuu", vmi85_lukupuu)
